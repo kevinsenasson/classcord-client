@@ -22,6 +22,55 @@ Vous devez mobiliser vos compétences en modélisation, architecture logicielle,
 
 ---
 
+## 🚀 Démarrage obligatoire via GitHub
+
+> 🎯 **Chaque étudiant doit travailler dans un dépôt GitHub personnel à partir de ce projet.**
+
+### Étapes à suivre :
+
+1. **Forkez** ce dépôt sur votre propre compte GitHub (bouton “Fork” en haut à droite).
+2. Sur votre fork, cliquez sur **Code > HTTPS** et copiez l’URL.
+3. Ouvrez VSCode ou votre terminal et tapez :
+   ```bash
+   git clone https://github.com/votre-identifiant/classcord-client.git
+   cd classcord-client
+   ```
+
+4. Créez une branche pour vos développements :
+   ```bash
+   git checkout -b prenom-nom-dev
+   ```
+   
+5. Enregistrez votre travail régulièrement :
+   ```bash
+   git add .
+   git commit -m "ex: ajout interface de login"
+   git push origin prenom-nom-dev
+   ```
+---
+
+## 📌 Contraintes GitHub pour la validation
+
+* Travail **exclusivement sur votre fork GitHub**
+* Projet avec **au moins 5 commits clairs et cohérents**
+* Présence d’une **branche de développement** (`prenom-dev`, `feature/chat`, etc.)
+* Un fichier `README.md` personnel avec :
+
+  * votre **nom et prénom**,
+  * les **fonctionnalités développées**,
+  * les **instructions pour lancer le projet**
+
+---
+
+## 🤝 (Facultatif) Pull Request vers le projet d’origine
+
+Si vous avez des suggestions d’amélioration :
+
+1. Faites vos changements sur votre fork
+2. Ouvrez une **pull request** vers ce dépôt original
+
+---
+
 ## 📊 Cahier des charges fonctionnel
 
 L'application cliente doit permettre :
