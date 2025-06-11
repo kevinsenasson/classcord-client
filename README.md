@@ -89,7 +89,7 @@ L'application cliente doit permettre :
 
 ### Architecture recommandée
 
-* **MVC** (Modèle-Vue-Contrôleur)
+* **MVC** (Modèle-Vue-Contrôleur) qu'on mettra en oeuvre dans le sgrandes lignes nous mêmes, sans framework
 * Thread réseau séparé (pour la réception)
 * Communication par **Socket TCP** (pas HTTP)
 
@@ -159,9 +159,9 @@ Les réponses du serveur suivent le même format, avec `type`, `status`, `messag
 
 * Créer un projet Java fonctionnel dans VSCode avec Maven.
 * Mettre en place la dépendance `org.json`.
-* Créer la structure du projet (dossiers `model`, `network`, `ui`, etc.).
+* Créer la structure du projet (dossiers `model`, `network`, `ui`, etc.) qui respecte dans le principe la séparation des préoccupations propre au MVC.
 * Implémenter les classes métier `User`, `Message`.
-* S'assurer que le projet compile et peut être exécuté.
+* S'assurer que le projet compile et peut être exécuté (définissez une classe de test, avec quelques instructions intéressantes).
 
 ### Etapes à suivre :
 
@@ -184,13 +184,11 @@ Une fois Maven installé, exécuter la commande suivante dans le terminal **selo
   ```bash
   mvn archetype:generate -DgroupId=fr.classcord -DartifactId=classcord-client -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
   ```
-
-  ```
+  
   - Ouvrir le projet nouvellement créé.
 
-  ```
 
-2. \*\*Configurer le \*\*\`\`
+2. **Configurer le fichier pom.xml**
 
    * Ajouter la dépendance JSON dans `<dependencies>` :
 
@@ -238,9 +236,11 @@ Une fois Maven installé, exécuter la commande suivante dans le terminal **selo
      }
      ```
 
+     Essayez de bien penser à tout et d'anticiper, dès maintenant, tous les futurs besoins.
+
 5. **Test de compilation**
 
-   * Lancer : `mvn compile`
+   * Lancer : `mvn compile` (vous pouvez aussi compiler sans passer par maven)
    * Vérifier qu’il n’y a pas d’erreur
 
 6. **(Bonus) Créer un Main minimal**
@@ -265,29 +265,47 @@ Une fois Maven installé, exécuter la commande suivante dans le terminal **selo
 * Recevoir des messages en temps réel depuis le serveur.
 * Afficher les messages entrants dans la console ou une fenêtre Swing simple.
 
+---
+
 ### Étapes à suivre :
 
-1. \*\*Création d'une classe ` dans \*\*`
+1. **Créer une classe `ClientInvite` dans le package `fr.classcord.network`**
 
    * Utiliser une socket TCP pour se connecter au serveur.
    * Ouvrir un `PrintWriter` pour envoyer des messages.
    * Ouvrir un `BufferedReader` pour recevoir les messages.
+   * Créer une méthode `connect(String ip, int port)` pour initier la connexion.
+   * Créer une méthode `send(String message)` pour envoyer une ligne JSON.
 
 2. **Gérer l'envoi d'un message JSON depuis la console**
 
-   * Créer un objet JSON à partir d'une chaîne utilisateur.
-   * Remplir les champs : `type`, `subtype`, `to`, `content`, `from`.
-   * Ajouter un saut de ligne ` ` en fin de message.
+   * Créer un objet JSON avec `org.json.JSONObject`.
+
+   * Remplir les champs requis :
+
+     ```java
+     JSONObject message = new JSONObject();
+     message.put("type", "message");
+     message.put("subtype", "global");
+     message.put("to", "global");
+     message.put("from", pseudo);
+     message.put("content", messageText);
+     ```
+
+   * Envoyer le message via le `PrintWriter`, suivi d’un `\n`.
 
 3. **Gérer la réception des messages**
 
-   * Créer un thread secondaire qui écoute les messages du serveur en continu.
-   * Afficher chaque message dés qu'il est reçu.
+   * Créer un thread secondaire qui écoute les messages en continu avec `BufferedReader.readLine()`.
+   * Afficher chaque message dés qu’il est reçu dans la console (ou future UI).
 
 4. **Interaction avec l'utilisateur dans la console**
 
-   * Saisie du pseudo invité
-   * Saisie du message à envoyer dans une boucle infinie
+   * Saisir le pseudo en console
+   * Boucle de lecture de message à envoyer
+   * Affichage asynchrone des messages reçus
+
+---
 
 ### Exigences techniques
 
@@ -295,16 +313,22 @@ Une fois Maven installé, exécuter la commande suivante dans le terminal **selo
 * Aucun blocage ne doit figer l'application.
 * Affichage clair de chaque message reçu (pseudo + contenu).
 
+---
+
 ### Bonus
 
 * Encapsulation de la logique JSON dans la classe `Message` (méthodes `toJson()` et `fromJson(String)`)
 * Interface graphique Swing de base (champ de texte + zone d'affichage)
 
+---
+
 ### Livrables attendus en fin de journée
 
-* Classe fonctionnelle capable de se connecter à un serveur
-* Envoi et réception de messages en mode invité
+* Classe `ClientInvite` fonctionnelle capable de se connecter à un serveur
+* Envoi et réception de messages JSON en mode invité
 * Affichage console ou fenêtre Swing basique
+
+---
 
 ## 📗 **Jour 3 - Mercredi : Authentification et gestion des comptes utilisateurs**
 
