@@ -564,3 +564,25 @@ Pour valider le bon fonctionnement de votre application ClassCord, vous devez pr
 | **Accessibilité**    | Navigation clavier / raccourcis       | Utilisation des flèches, tabulation, raccourcis pour les commandes principales                   |
 
 N’hésitez pas à innover et à aller au-delà du cahier des charges si le temps le permet : tout ajout utile, stable, pertinent sera valorisé !
+
+
+---
+
+## 🎓 Compétences mobilisées (Référentiel BTS SIO – SLAM)
+
+| Bloc de compétences | Référence | Intitulé                                                      |
+|---------------------|-----------|----------------------------------------------------------------|
+| Bloc 1              | A1.1.1    | Analyse du cahier des charges d’un service à produire         |
+| Bloc 1              | A1.2.1    | Élaboration et présentation d’une solution technique           |
+| Bloc 2              | A2.2.1    | Conception ou adaptation de l’interface utilisateur            |
+| Bloc 2              | A2.2.2    | Conception ou adaptation de la base de données                 |
+| Bloc 2              | A2.2.3    | Réalisation des composants logiciels                           |
+| Bloc 3              | A3.2      | Développement d’une application conforme aux spécifications    |
+| Bloc 3              | A3.3      | Réalisation de tests et de documentation technique             |
+| Bloc 4              | A4.1      | Analyse des échanges de données                                |
+| Bloc 4              | A4.2      | Implémentation d’échanges sécurisés (JSON, protocole client)  |
+| Bloc 5              | A5.1.2    | Mise à jour de la documentation technique                      |
+| Bloc 5              | A5.2.4    | Rédaction d’une documentation utilisateur                      |
+
+> Ce projet peut être valorisé en E4 (U41 - Projets SLAM) ou en E5 (U52 - Parcours SLAM)
+
