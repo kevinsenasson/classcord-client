@@ -10,7 +10,7 @@
 
 Vous intégrez une équipe de développeurs chargée de créer une application cliente pour une plateforme de messagerie instantanée utilisée en réseau local dans un établissement. Baptisée **ClassCord**, cette solution a pour objectif de permettre aux utilisateurs (professeurs, étudiants) de communiquer en temps réel, de manière fluide et sécurisée.
 
-Le serveur de tchat, déjà en place et géré par les étudiants SISR, fonctionne sur le réseau local. Chaque utilisateur se connecte à l'adresse IP de son choix pour interagir avec le serveur d'un camarade ou avec le serveur central de la salle.
+Le serveur de tchat, déjà en place et géré par les étudiants SISR, fonctionne sur le réseau local. Chaque utilisateur se connecte à l'adresse IP de son choix pour interagir avec le serveur d'un camarade ou avec le serveur central de la salle. Votre formateur vous proposera dès le début du projet son propre serveur opérationnel afin que vous ayez toujours un serveur sur lequel vous pourrez vous connecter.
 
 ---
 
@@ -53,6 +53,8 @@ Vous devez mobiliser vos compétences en modélisation, architecture logicielle,
   * votre **nom et prénom**,
   * les **fonctionnalités développées**,
   * les **instructions pour lancer le projet**
+
+Pour l'occasion, vous apprendrez la syntaxe markdown (md) pour rédiger la documentation.
 
 ---
 
@@ -554,6 +556,8 @@ N’hésitez pas à innover et à aller au-delà du cahier des charges si le tem
 ---
 
 ## 🎓 Compétences mobilisées (Référentiel BTS SIO – SLAM)
+
+A condition d'avoir tout très bien réalisé, voici a maxima les compétences que vous pouvez définir comme couvertes par le projet.
 
 | Bloc de compétences | Référence | Intitulé                                                                                   |
 |---------------------|-----------|---------------------------------------------------------------------------------------------|
