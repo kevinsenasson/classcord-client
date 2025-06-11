@@ -36,38 +36,23 @@ Vous devez mobiliser vos compétences en modélisation, architecture logicielle,
    cd classcord-client
    ```
 
-4. Créez une branche pour vos développements :
-   ```bash
-   git checkout -b prenom-nom-dev
-   ```
-   
-5. Enregistrez votre travail régulièrement :
+4. Enregistrez votre travail régulièrement :
    ```bash
    git add .
    git commit -m "ex: ajout interface de login"
-   git push origin prenom-nom-dev
+   git push origin main
    ```
 ---
 
 ## 📌 Contraintes GitHub pour la validation
 
 * Travail **exclusivement sur votre fork GitHub**
-* Projet avec **au moins 5 commits clairs et cohérents**
-* Présence d’une **branche de développement** (`prenom-dev`, `feature/chat`, etc.)
+* Projet avec **au moins 1 commit par jour clair et cohérent**
 * Un fichier `README.md` personnel avec :
 
   * votre **nom et prénom**,
   * les **fonctionnalités développées**,
   * les **instructions pour lancer le projet**
-
----
-
-## 🤝 (Facultatif) Pull Request vers le projet d’origine
-
-Si vous avez des suggestions d’amélioration :
-
-1. Faites vos changements sur votre fork
-2. Ouvrez une **pull request** vers ce dépôt original
 
 ---
 
