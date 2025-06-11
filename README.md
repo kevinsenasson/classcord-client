@@ -566,13 +566,11 @@ N’hésitez pas à innover et à aller au-delà du cahier des charges si le tem
 |                     | ✔         | Réaliser les tests nécessaires à la validation ou à la mise en production                  |
 |                     | ✔         | Rédiger des documentations technique et d’utilisation d’une solution applicative          |
 |                     | ✔         | Exploiter les fonctionnalités d’un environnement de développement et de tests             |
-
 | Assurer la maintenance corrective ou évolutive d’une solution applicative |
 |                     | ✔         | Recueillir, analyser et mettre à jour les informations sur une version d’une application   |
 |                     | ✔         | Évaluer la qualité d’une solution applicative                                              |
 |                     | ✔         | Analyser et corriger un dysfonctionnement                                                  |
 |                     | ✔         | Mettre à jour des documentations technique et d’utilisation d’une solution applicative     |
-
 | Gérer les données |
 |                     | ✔         | Développer des fonctionnalités applicatives au sein d’un système de gestion de base de données |
 |                     | ✔         | Concevoir ou adapter une base de données                                                   |
