@@ -555,19 +555,29 @@ N’hésitez pas à innover et à aller au-delà du cahier des charges si le tem
 
 ## 🎓 Compétences mobilisées (Référentiel BTS SIO – SLAM)
 
-| Bloc de compétences | Référence | Intitulé                                                      |
-|---------------------|-----------|----------------------------------------------------------------|
-| Bloc 1              | A1.1.1    | Analyse du cahier des charges d’un service à produire         |
-| Bloc 1              | A1.2.1    | Élaboration et présentation d’une solution technique           |
-| Bloc 2              | A2.2.1    | Conception ou adaptation de l’interface utilisateur            |
-| Bloc 2              | A2.2.2    | Conception ou adaptation de la base de données                 |
-| Bloc 2              | A2.2.3    | Réalisation des composants logiciels                           |
-| Bloc 3              | A3.2      | Développement d’une application conforme aux spécifications    |
-| Bloc 3              | A3.3      | Réalisation de tests et de documentation technique             |
-| Bloc 4              | A4.1      | Analyse des échanges de données                                |
-| Bloc 4              | A4.2      | Implémentation d’échanges sécurisés (JSON, protocole client)  |
-| Bloc 5              | A5.1.2    | Mise à jour de la documentation technique                      |
-| Bloc 5              | A5.2.4    | Rédaction d’une documentation utilisateur                      |
+| Bloc de compétences | Référence | Intitulé                                                                                   |
+|---------------------|-----------|---------------------------------------------------------------------------------------------|
+| Concevoir et développer une solution applicative |
+|                     | ✔         | Analyser un besoin exprimé et son contexte juridique                                        |
+|                     | ✔         | Participer à la conception de l’architecture d’une solution applicative                    |
+|                     | ✔         | Modéliser une solution applicative                                                         |
+|                     | ✔         | Identifier, développer, utiliser ou adapter des composants logiciels                       |
+|                     | ✔         | Utiliser des composants d’accès aux données                                                |
+|                     | ✔         | Réaliser les tests nécessaires à la validation ou à la mise en production                  |
+|                     | ✔         | Rédiger des documentations technique et d’utilisation d’une solution applicative          |
+|                     | ✔         | Exploiter les fonctionnalités d’un environnement de développement et de tests             |
 
-> Ce projet peut être valorisé en E4 (U41 - Projets SLAM) ou en E5 (U52 - Parcours SLAM)
+| Assurer la maintenance corrective ou évolutive d’une solution applicative |
+|                     | ✔         | Recueillir, analyser et mettre à jour les informations sur une version d’une application   |
+|                     | ✔         | Évaluer la qualité d’une solution applicative                                              |
+|                     | ✔         | Analyser et corriger un dysfonctionnement                                                  |
+|                     | ✔         | Mettre à jour des documentations technique et d’utilisation d’une solution applicative     |
+
+| Gérer les données |
+|                     | ✔         | Développer des fonctionnalités applicatives au sein d’un système de gestion de base de données |
+|                     | ✔         | Concevoir ou adapter une base de données                                                   |
+|                     | ✔         | Administrer et déployer une base de données                                                |
+
+
+
 
