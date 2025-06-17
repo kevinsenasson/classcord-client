@@ -1,4 +1,3 @@
-
 package fr.classcord.network;
 
 import java.io.*;
@@ -20,16 +19,25 @@ public class ClientInvite {
         out.println(message);
     }
 
-    public void listen() {
+    public void listen(MessageListener listener) {
         new Thread(() -> {
             String line;
             try {
-                while ((line = in.readLine()) != null) {
-                    System.out.println("Message reçu : " + line);
+                while ((line = getIn().readLine()) != null) {
+                    listener.onMessage(line);
                 }
             } catch (IOException e) {
-                System.out.println("Erreur de réception : " + e.getMessage());
+                listener.onMessage("Erreur de réception : " + e.getMessage());
             }
         }).start();
+    }
+
+    public BufferedReader getIn() {
+        return in;
+    }
+
+    // Interface pour le callback de réception de message
+    public interface MessageListener {
+        void onMessage(String message);
     }
 }

@@ -12,7 +12,7 @@ public class App {
 
         ClientInvite client = new ClientInvite();
         client.connect("10.0.108.81", 12345); // adapte l’IP et le port
-        client.listen();
+        client.listen(null);
 
         while (true) {
             String messageText = console.readLine();
