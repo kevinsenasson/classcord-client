@@ -1,12 +1,13 @@
+# Kevin Senasson
+
 # Projet Classcord - Jour 1
 
-## Fonctionnalités ajoutées
-
-- **Classe `User`**
-
-  - Attributs privés : `username`, `status`
-  - Constructeur pour initialiser les attributs
-  - Méthode `toString` pour un affichage lisible de l’utilisateur
+### Fonctionnalités ajoutées
+- Création de la classe `User` avec les attributs `username` et `status`
+- Création de la classe `Message` avec les attributs `type`, `subtype`, `from`, `to`, `content`, `timestamp`
+- Ajout des constructeurs pour chaque classe
+- Implémentation de la méthode `toString` pour faciliter l’affichage des objets
+- Réalisation de premiers tests simples pour vérifier le bon fonctionnement des méthodes `toString`
 
 - **Classe `Message`**
 
@@ -15,34 +16,17 @@
   - (À compléter : méthodes pour manipuler les messages)
 
 - **Tests**
-  - Création d’une classe de test `UserTest` avec deux tests simples sur la méthode `toString`
-  - Vérification de l’affichage des objets `User` dans la console
-  - Test manuel possible via la méthode `main` dans la classe `User`
-
-## Ce qui reste à faire
-
-- Ajouter des méthodes pour manipuler les messages
-- Créer des interactions entre utilisateurs et messages
-- Ajouter des tests unitaires pour la classe `Message`
-- Améliorer la gestion des statuts utilisateurs
-
----
+  
+  - Vérification de l’affichage des objets `Message` dans la console
 
 **Résumé du jour 1**
 
 - Création des classes principales
 - Mise en place des constructeurs et méthodes de base
-- Premiers tests unitaires et vérifications manuelles
+- petit test de fonctionnement 
 
 ---
 
 ## Comment lancer le projet
 
-1. Compiler le projet avec Maven :
-   ```
-   mvn compile
-   ```
-2. Lancer les tests :
-   ```
-   mvn test
-   ```
+1. Play sur vs code et affichage dans la console 
