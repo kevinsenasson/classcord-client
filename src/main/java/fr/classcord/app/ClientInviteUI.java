@@ -155,7 +155,24 @@ public class ClientInviteUI extends JFrame {
 
         try {
             client.connect(ip, port);
-            client.listen(this::appendMessage);
+            client.listen(msg -> {
+                try {
+                    JSONObject json = new JSONObject(msg);
+                    if ("message".equals(json.optString("type"))) {
+                        String from = json.optString("from", "???");
+                        String content = json.optString("content", "");
+                        appendMessage("[" + from + "] : " + content);
+                    } else if ("status".equals(json.optString("type"))) {
+                        String user = json.optString("user", "???");
+                        String state = json.optString("state", "");
+                        appendMessage("[Serveur] : " + user + " est " + state);
+                    } else {
+                        appendMessage("[Serveur] : " + msg);
+                    }
+                } catch (Exception e) {
+                    appendMessage("[Erreur réception] : " + msg);
+                }
+            });
             appendMessage("Connecté au serveur !");
             connectButton.setEnabled(false);
             ipField.setEnabled(false);
