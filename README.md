@@ -89,3 +89,55 @@
 - Le serveur doit être lancé avant de connecter les clients.
 - Plusieurs clients peuvent se connecter et échanger des messages en temps réel.
 - Les messages sont affichés avec le pseudo de l’expéditeur pour plus de clarté.
+
+## Jour 3 – Authentification et gestion des comptes utilisateurs
+
+### Fonctionnalités implémentées
+
+- **Connexion au serveur** :  
+  L’utilisateur saisit l’adresse IP et le port du serveur. Une fois connecté, il accède à l’interface d’authentification.
+
+- **Inscription et connexion** :  
+  L’utilisateur peut créer un compte (inscription) ou se connecter avec un compte existant.  
+  Lors de l’inscription, les informations sont envoyées au serveur sous forme de message JSON :
+
+  ```json
+  {
+    "type": "register",
+    "username": "alice",
+    "password": "azerty"
+  }
+  ```
+
+  Après une inscription réussie, le client effectue automatiquement la connexion :
+
+  ```json
+  {
+    "type": "login",
+    "username": "alice",
+    "password": "azerty"
+  }
+  ```
+
+- **Gestion des réponses serveur** :
+
+  - En cas de succès, l’utilisateur accède à la fenêtre de chat.
+  - En cas d’erreur (ex : pseudo déjà utilisé), un message d’erreur s’affiche et l’utilisateur peut réessayer.
+
+- **Mode invité** :  
+  L’utilisateur peut accéder au chat sans compte via le bouton « Mode invité ».
+
+- **Sécurité et confort** :
+  - Le mot de passe est masqué dans l’interface.
+  - Le dernier pseudo utilisé est mémorisé localement pour faciliter la reconnexion.
+
+### Protocole d’échange
+
+- Les échanges avec le serveur se font au format JSON, conformément au cahier des charges.
+
+### Lancement
+
+1. Lancer l’application via la classe `UserLM`.
+2. Se connecter au serveur (IP/port).
+3. S’authentifier (inscription + connexion automatique, ou connexion directe, ou mode invité).
+4. Accéder à la fenêtre de chat.
