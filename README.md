@@ -163,3 +163,113 @@
 
 - La liste des utilisateurs est synchronisée avec le serveur à chaque connexion et toutes les 5 secondes.
 - La sélection d’un utilisateur pour les messages privés est conservée lors du rafraîchissement de la liste.
+
+# ClassCord
+
+## Jour 5 - Gestion des statuts et finalisation du projet
+
+### Objectifs de la journée
+
+- Permettre aux utilisateurs de choisir leur statut (disponible, absent, invisible).
+- Envoyer ce statut au serveur et l'afficher dans la liste des connectés.
+- Améliorer l'affichage graphique de l'application (interface Swing).
+- Vérifier toutes les fonctionnalités du projet et corriger les bugs.
+- Préparer les livrables techniques pour finaliser la réalisation professionnelle.
+
+---
+
+## Fonctionnalités principales
+
+- **Gestion des statuts utilisateur** :  
+  Les utilisateurs peuvent choisir leur statut (disponible, absent, ne pas déranger, invisible) via un menu déroulant.  
+  Le statut est envoyé au serveur sous forme de message JSON :
+
+  ```json
+  {
+    "type": "status",
+    "state": "invisible"
+  }
+  ```
+
+  L'affichage de la liste des connectés est mis à jour dynamiquement, avec une icône colorée pour chaque statut.
+
+- **Interface graphique Swing améliorée** :  
+  L'interface a été retravaillée pour être plus lisible, moderne et agréable à utiliser (alignements, couleurs, marges, icônes, réactivité).
+
+- **Tests et robustesse** :  
+  Les fonctionnalités ont été testées entre plusieurs clients, avec gestion des cas limites (déconnexion, reconnexion, mauvais identifiants, envoi vide, etc.).
+
+- **Documentation** :  
+  Le projet est documenté :
+  - README.md (ce fichier)
+  - Commentaires dans le code source
+
+---
+
+## Architecture du projet
+
+Le projet suit une architecture **MVC** :
+
+- **Model** : gestion des données utilisateur, statuts, messages (ex : `User.java`)
+- **View** : interfaces graphiques Swing (`AuthUI.java`, `UserUI.java`, `ClientInviteUI.java`)
+- **Controller** : logique de communication réseau et gestion des événements (`ClientInvite.java`)
+
+---
+
+## Instructions de lancement
+
+1. **Lancer le serveur**  
+   (localement si vous avez un serveur ou sur une autre machine)
+
+2. **Lancer le client**
+
+Exécuter directement la classe principale depuis votre IDE.
+
+3. **Se connecter**
+
+   - Avec un compte existant (login)
+   - En créant un nouveau compte (register)
+   - Ou en mode invité
+
+4. **Utiliser l'application**
+   - Envoyer des messages globaux ou privés
+   - Changer de statut et observer la propagation
+   - Voir la liste des connectés et leur statut
+
+---
+
+## Livrables attendus
+
+- Application complète, testée, stable et fonctionnelle
+- Interface Swing finale intégrant la gestion des statuts
+- Dossier de documentation (README.md)
+- Projet archivable (Github)
+
+---
+
+## Protocole de démonstration
+
+1. Lancer le serveur (local ou distant)
+2. Lancer deux clients (comptes différents ou mode invité)
+3. Montrer :
+   - Connexion (identifiant ou invité)
+   - Envoi de message global
+   - Envoi de message privé
+   - Changement de statut et propagation
+   - Affichage dynamique de la liste des connectés avec statut
+   - Distinction claire entre message global et MP
+   - Aucune erreur lors de la déconnexion
+
+---
+
+## Auteurs
+
+- Kevin Senasson
+
+---
+
+## Remarques
+
+- Le code source est commenté pour faciliter la compréhension.
+
+---

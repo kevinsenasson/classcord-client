@@ -8,7 +8,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 
+/**
+ * Interface graphique pour l'authentification utilisateur (connexion,
+ * inscription, invité).
+ */
 public class UserUI extends JFrame {
+
+    // --- Attributs ---
     private JTextField usernameField = new JTextField();
     private JPasswordField passwordField = new JPasswordField();
     private JButton loginButton = new JButton("Se connecter");
@@ -17,6 +23,13 @@ public class UserUI extends JFrame {
     private JLabel messageLabel = new JLabel(" ");
     private ClientInvite client;
 
+    // --- Constructeurs ---
+
+    /**
+     * Constructeur principal, initialise l'interface d'authentification.
+     * 
+     * @param client Instance du client réseau déjà connecté.
+     */
     public UserUI(ClientInvite client) {
         this.client = client;
         setTitle("Classcord - Authentification");
@@ -76,6 +89,13 @@ public class UserUI extends JFrame {
         inviteButton.addActionListener(e -> openInviteMode());
     }
 
+    // --- Méthodes ---
+
+    /**
+     * Gère la connexion de l'utilisateur.
+     * 
+     * @param type Type d'authentification ("login").
+     */
     private void handleAuth(String type) {
         String username = usernameField.getText().trim();
         String password = new String(passwordField.getPassword()).trim();
@@ -120,7 +140,9 @@ public class UserUI extends JFrame {
         }).start();
     }
 
-    // Register puis login automatique si succès
+    /**
+     * Gère l'inscription puis la connexion automatique si succès.
+     */
     private void handleRegisterThenLogin() {
         String username = usernameField.getText().trim();
         String password = new String(passwordField.getPassword()).trim();
@@ -179,16 +201,24 @@ public class UserUI extends JFrame {
         }).start();
     }
 
+    /**
+     * Ouvre le mode invité.
+     */
     private void openInviteMode() {
         dispose();
         new ClientInviteUI().setVisible(true);
     }
 
+    /**
+     * Ouvre la fenêtre de chat après authentification.
+     */
     private void openChatWindow(String username, ClientInvite client) {
         new ClientInviteUI(client, username).setVisible(true);
     }
 
-    // Bonus : mémoriser le dernier pseudo utilisé
+    /**
+     * Sauvegarde le dernier nom d'utilisateur utilisé dans un fichier.
+     */
     private void saveLastUsername(String username) {
         try (FileWriter fw = new FileWriter("lastuser.txt")) {
             fw.write(username);
@@ -196,6 +226,9 @@ public class UserUI extends JFrame {
         }
     }
 
+    /**
+     * Lit le dernier nom d'utilisateur utilisé depuis un fichier.
+     */
     private String readLastUsername() {
         try (BufferedReader br = new BufferedReader(new FileReader("lastuser.txt"))) {
             return br.readLine();

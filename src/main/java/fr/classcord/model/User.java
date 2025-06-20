@@ -3,33 +3,70 @@ package fr.classcord.model;
 import fr.classcord.network.ClientInvite;
 import org.json.JSONObject;
 
+/**
+ * Classe représentant un utilisateur de l'application.
+ */
 public class User {
-	private String username;
-	private String status;
 
+	// --- Attributs ---
+	private String username; // Nom d'utilisateur
+	private String status; // Statut de l'utilisateur
+
+	// --- Constructeurs ---
+
+	/**
+	 * Constructeur User.
+	 * 
+	 * @param username Nom d'utilisateur
+	 * @param status   Statut de l'utilisateur
+	 */
 	public User(String username, String status) {
 		this.username = username;
 		this.status = status;
 	}
 
+	// --- Méthodes ---
+
 	// Getters et Setters
+
+	/**
+	 * Retourne le nom d'utilisateur.
+	 */
 	public String getUsername() {
 		return this.username;
 	}
 
+	/**
+	 * Définit le nom d'utilisateur.
+	 */
 	public void setUsername(String username) {
 		this.username = username;
 	}
 
+	/**
+	 * Retourne le statut de l'utilisateur.
+	 */
 	public String getStatus() {
 		return this.status;
 	}
 
+	/**
+	 * Définit le statut de l'utilisateur.
+	 */
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
-	// Méthode pour s'inscrire
+	// Méthodes statiques pour l'inscription et la connexion
+
+	/**
+	 * Méthode pour inscrire un nouvel utilisateur.
+	 * 
+	 * @param client   Instance du client réseau
+	 * @param username Nom d'utilisateur
+	 * @param password Mot de passe
+	 * @return Réponse du serveur
+	 */
 	public static String register(ClientInvite client, String username, String password) throws Exception {
 		JSONObject json = new JSONObject();
 		json.put("type", "register");
@@ -40,7 +77,14 @@ public class User {
 		return response;
 	}
 
-	// Méthode pour se connecter
+	/**
+	 * Méthode pour connecter un utilisateur existant.
+	 * 
+	 * @param client   Instance du client réseau
+	 * @param username Nom d'utilisateur
+	 * @param password Mot de passe
+	 * @return Réponse du serveur
+	 */
 	public static String login(ClientInvite client, String username, String password) throws Exception {
 		JSONObject json = new JSONObject();
 		json.put("type", "login");
@@ -50,5 +94,4 @@ public class User {
 		String response = client.getIn().readLine();
 		return response;
 	}
-
 }

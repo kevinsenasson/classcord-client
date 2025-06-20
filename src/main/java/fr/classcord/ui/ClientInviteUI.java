@@ -13,7 +13,14 @@ import java.awt.Graphics2D;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Interface graphique principale pour l'invité sur Classcord.
+ * Permet la connexion, l'affichage des utilisateurs et l'envoi de messages.
+ */
 public class ClientInviteUI extends JFrame {
+
+    // --- Attributs ---
+
     // Couleurs de l'interface
     private static final Color BG_COLOR = new Color(34, 40, 49);
     private static final Color PANEL_COLOR = new Color(44, 54, 63);
@@ -54,6 +61,11 @@ public class ClientInviteUI extends JFrame {
     private ClientInvite client;
     private String pseudo;
 
+    // --- Constructeurs ---
+
+    /**
+     * Constructeur utilisé après connexion, avec client et pseudo.
+     */
     public ClientInviteUI(ClientInvite client, String pseudo) {
         this();
         this.client = client;
@@ -71,6 +83,9 @@ public class ClientInviteUI extends JFrame {
         requestUsersList();
     }
 
+    /**
+     * Constructeur par défaut, initialise l'interface graphique.
+     */
     public ClientInviteUI() {
         setTitle("Classcord - Invité");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -229,13 +244,14 @@ public class ClientInviteUI extends JFrame {
         });
     }
 
-    // Style pour les labels
+    // --- Méthodes ---
+
+    // Méthodes de style pour l'interface
     private void styleLabel(JLabel label) {
         label.setForeground(FG_COLOR);
         label.setFont(new Font("Segoe UI", Font.BOLD, 14));
     }
 
-    // Style pour les champs de texte
     private void styleField(JTextField field) {
         field.setBackground(FIELD_COLOR);
         field.setForeground(FG_COLOR);
@@ -246,7 +262,6 @@ public class ClientInviteUI extends JFrame {
         field.setFont(new Font("Segoe UI", Font.PLAIN, 14));
     }
 
-    // Style pour les boutons
     private void styleButton(JButton button) {
         button.setBackground(ACCENT_COLOR);
         button.setForeground(BG_COLOR);
@@ -418,6 +433,7 @@ public class ClientInviteUI extends JFrame {
         messageField.setText("");
     }
 
+    // Affiche un message dans la zone de chat
     private void appendMessage(String msg) {
         SwingUtilities.invokeLater(() -> {
             messagesArea.append(msg + "\n");
@@ -425,7 +441,12 @@ public class ClientInviteUI extends JFrame {
         });
     }
 
-    // Renderer personnalisé pour la JList des utilisateurs
+    // --- Classes/Interfaces internes ---
+
+    /**
+     * Renderer personnalisé pour la JList des utilisateurs, affiche l'icône de
+     * statut.
+     */
     private class UserListCellRenderer extends DefaultListCellRenderer {
         @Override
         public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
@@ -451,7 +472,9 @@ public class ClientInviteUI extends JFrame {
         }
     }
 
-    // Crée une petite icône ronde colorée pour le statut
+    /**
+     * Crée une petite icône ronde colorée pour le statut.
+     */
     private Icon createStatusIcon(Color color) {
         int size = 10;
         BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
@@ -462,6 +485,9 @@ public class ClientInviteUI extends JFrame {
         return new ImageIcon(image);
     }
 
+    /**
+     * Point d'entrée de l'application pour lancer l'interface invité.
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new ClientInviteUI().setVisible(true));
     }

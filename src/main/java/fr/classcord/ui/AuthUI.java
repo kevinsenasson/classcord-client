@@ -5,13 +5,24 @@ import fr.classcord.network.ClientInvite;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Interface graphique pour la connexion au serveur Classcord.
+ */
 public class AuthUI extends JFrame {
-    private JTextField ipField = new JTextField("127.0.0.1");
-    private JTextField portField = new JTextField("12345");
-    private JButton connectButton = new JButton("Connexion serveur");
-    private JLabel serverStatus = new JLabel(" ");
-    private ClientInvite client;
 
+    // --- Attributs ---
+    private JTextField ipField = new JTextField("127.0.0.1"); // Champ pour l'adresse IP
+    private JTextField portField = new JTextField("12345"); // Champ pour le port
+    private JButton connectButton = new JButton("Connexion serveur"); // Bouton de connexion
+    private JLabel serverStatus = new JLabel(" "); // Label pour l'état du serveur
+    private ClientInvite client; // Client réseau
+
+    // --- Constructeurs ---
+
+    /**
+     * Constructeur de la fenêtre d'authentification.
+     * Initialise l'interface graphique et les listeners.
+     */
     public AuthUI() {
         setTitle("Classcord - Connexion serveur");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -23,7 +34,6 @@ public class AuthUI extends JFrame {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
-
         gbc.gridx = 0;
         gbc.gridy = 0;
         panel.add(new JLabel("Adresse IP :"), gbc);
@@ -49,6 +59,12 @@ public class AuthUI extends JFrame {
         connectButton.addActionListener(e -> connectToServer());
     }
 
+    // --- Méthodes ---
+
+    /**
+     * Tente de se connecter au serveur avec les informations saisies.
+     * Affiche le résultat dans l'interface.
+     */
     private void connectToServer() {
         String ip = ipField.getText().trim();
         int port;
@@ -82,6 +98,9 @@ public class AuthUI extends JFrame {
         }).start();
     }
 
+    /**
+     * Point d'entrée de l'application pour lancer l'interface d'authentification.
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new AuthUI().setVisible(true));
     }

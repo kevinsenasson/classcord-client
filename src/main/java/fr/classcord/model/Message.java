@@ -1,100 +1,53 @@
 package fr.classcord.model;
 
+import fr.classcord.network.ClientInvite;
 import org.json.JSONObject;
+import java.io.*;
 
-public class Message {
-	private String type;
-	private String subtype;
-	private String from;
-	private String to;
-	private String content;
-	private String timestamp;
+/**
+ * Classe principale pour l'application de messagerie.
+ * Permet à un utilisateur de se connecter et d'envoyer des messages globaux.
+ */
+public class message {
+    /**
+     * Point d'entrée principal de l'application.
+     */
+    public static void main(String[] args) throws IOException {
+        String pseudo = demanderPseudo();
+        ClientInvite client = new ClientInvite();
+        client.connect("10.0.108.52", 12345); // adapte l’IP et le port
+        client.listen(null);
+        boucleEnvoiMessages(client, pseudo);
+    }
 
-	public Message(String type, String subtype, String from, String to, String content, String timestamp) {
-		this.type = type;
-		this.subtype = subtype;
-		this.from = from;
-		this.to = to;
-		this.content = content;
-		this.timestamp = timestamp;
-	}
+    /**
+     * Demande à l'utilisateur de saisir son pseudo via la console.
+     * 
+     * @return Le pseudo saisi par l'utilisateur.
+     */
+    private static String demanderPseudo() throws IOException {
+        BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
+        System.out.print("Entrez votre pseudo : ");
+        return console.readLine();
+    }
 
-	// Getters
-	public String getType() {
-		return type;
-	}
-
-	public String getSubtype() {
-		return subtype;
-	}
-
-	public String getFrom() {
-		return from;
-	}
-
-	public String getTo() {
-		return to;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public String getTimestamp() {
-		return timestamp;
-	}
-
-	// Setters
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public void setSubtype(String subtype) {
-		this.subtype = subtype;
-	}
-
-	public void setFrom(String from) {
-		this.from = from;
-	}
-
-	public void setTo(String to) {
-		this.to = to;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
-	public void setTimestamp(String timestamp) {
-		this.timestamp = timestamp;
-	}
-
-	// Convertit l'objet Message en JSONObject
-	public JSONObject toJson() {
-		JSONObject json = new JSONObject();
-		json.put("type", type);
-		json.put("subtype", subtype);
-		json.put("from", from);
-		json.put("to", to);
-		json.put("content", content);
-		json.put("timestamp", timestamp);
-		return json;
-	}
-
-	// Crée un objet Message à partir d'une chaîne JSON
-	public static Message fromJson(String jsonString) {
-		JSONObject json = new JSONObject(jsonString);
-		return new Message(
-				json.optString("type", null),
-				json.optString("subtype", null),
-				json.optString("from", null),
-				json.optString("to", null),
-				json.optString("content", null),
-				json.optString("timestamp", null));
-	}
-
-	@Override
-	public String toString() {
-		return "[" + from + " → " + to + "] : " + content;
-	}
+    /**
+     * Boucle principale d'envoi des messages à tous les utilisateurs (global).
+     * 
+     * @param client Instance du client connecté au serveur.
+     * @param pseudo Pseudo de l'utilisateur courant.
+     */
+    private static void boucleEnvoiMessages(ClientInvite client, String pseudo) throws IOException {
+        BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
+        while (true) {
+            String messageText = console.readLine();
+            JSONObject message = new JSONObject();
+            message.put("type", "message");
+            message.put("subtype", "global");
+            message.put("to", "global");
+            message.put("from", pseudo);
+            message.put("content", messageText);
+            client.send(message.toString());
+        }
+    }
 }
