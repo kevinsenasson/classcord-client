@@ -8,26 +8,41 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.Graphics2D;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ClientInviteUI extends JFrame {
+    // Couleurs de l'interface
     private static final Color BG_COLOR = new Color(34, 40, 49);
     private static final Color PANEL_COLOR = new Color(44, 54, 63);
     private static final Color FIELD_COLOR = new Color(57, 62, 70);
     private static final Color FG_COLOR = new Color(238, 238, 238);
     private static final Color ACCENT_COLOR = new Color(0, 173, 181);
 
+    // Icônes pour les statuts
+    private static final Color ICON_ONLINE = new Color(0, 200, 0);
+    private static final Color ICON_AWAY = new Color(255, 140, 0);
+    private static final Color ICON_DND = new Color(200, 0, 0);
+    private static final Color ICON_INVISIBLE = new Color(120, 120, 120);
+
+    // Champs de connexion
     private JTextField ipField = new JTextField("127.0.0.1");
     private JTextField portField = new JTextField("12345");
     private JTextField pseudoField = new JTextField("Pseudo");
     private JButton connectButton = new JButton("Se connecter");
 
+    // ComboBox pour le statut utilisateur
+    private JComboBox<String> statusCombo = new JComboBox<>(
+            new String[] { "Disponible", "Absent", "Ne pas déranger", "Invisible" });
+
+    // Zone de chat
     private JTextArea messagesArea = new JTextArea();
     private JTextField messageField = new JTextField();
     private JButton sendButton = new JButton("Envoyer");
 
-    // Pour la gestion des utilisateurs connectés
+    // Liste des utilisateurs connectés
     private DefaultListModel<String> userListModel = new DefaultListModel<>();
     private JList<String> userList = new JList<>(userListModel);
     private Map<String, String> userStatusMap = new HashMap<>(); // pseudo -> statut
@@ -52,18 +67,14 @@ public class ClientInviteUI extends JFrame {
         // Lance l'écoute des messages
         client.listen(msg -> handleIncomingMessage(msg));
 
-        // Demande la liste des utilisateurs connectés au serveur
+        // Demande la liste des utilisateurs connectés au serveur (une seule fois)
         requestUsersList();
-
-        // Démarre un timer qui demande la liste toutes les 5 secondes
-        new javax.swing.Timer(5000, e -> requestUsersList()).start();
-
     }
 
     public ClientInviteUI() {
         setTitle("Classcord - Invité");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(900, 600);
+        setSize(950, 600);
         setLocationRelativeTo(null);
 
         // Appliquer le style sombre à la fenêtre principale
@@ -118,6 +129,12 @@ public class ClientInviteUI extends JFrame {
         gbc.weightx = 0;
         topPanel.add(connectButton, gbc);
 
+        // ComboBox pour le statut utilisateur
+        gbc.gridx = 7;
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.weightx = 0;
+        topPanel.add(statusCombo, gbc);
+
         JPanel topPanelWithMargin = new JPanel(new BorderLayout());
         topPanelWithMargin.setBackground(BG_COLOR);
         topPanelWithMargin.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -134,8 +151,12 @@ public class ClientInviteUI extends JFrame {
         userList.setForeground(FG_COLOR);
         userList.setSelectionBackground(ACCENT_COLOR);
         userList.setSelectionForeground(BG_COLOR);
+
+        // Renderer personnalisé pour afficher l'icône de statut
+        userList.setCellRenderer(new UserListCellRenderer());
+
         userPanel.add(new JScrollPane(userList), BorderLayout.CENTER);
-        userPanel.setPreferredSize(new Dimension(180, 0));
+        userPanel.setPreferredSize(new Dimension(220, 0));
 
         // Zone d'affichage des messages
         messagesArea.setEditable(false);
@@ -189,13 +210,32 @@ public class ClientInviteUI extends JFrame {
                 }
             }
         });
+
+        // Listener pour la combo de statut
+        statusCombo.addActionListener(e -> {
+            String state = "online";
+            switch (statusCombo.getSelectedIndex()) {
+                case 1:
+                    state = "away";
+                    break;
+                case 2:
+                    state = "dnd";
+                    break;
+                case 3:
+                    state = "invisible";
+                    break;
+            }
+            sendStatusToServer(state);
+        });
     }
 
+    // Style pour les labels
     private void styleLabel(JLabel label) {
         label.setForeground(FG_COLOR);
         label.setFont(new Font("Segoe UI", Font.BOLD, 14));
     }
 
+    // Style pour les champs de texte
     private void styleField(JTextField field) {
         field.setBackground(FIELD_COLOR);
         field.setForeground(FG_COLOR);
@@ -206,6 +246,7 @@ public class ClientInviteUI extends JFrame {
         field.setFont(new Font("Segoe UI", Font.PLAIN, 14));
     }
 
+    // Style pour les boutons
     private void styleButton(JButton button) {
         button.setBackground(ACCENT_COLOR);
         button.setForeground(BG_COLOR);
@@ -215,6 +256,7 @@ public class ClientInviteUI extends JFrame {
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
+    // Connexion au serveur
     private void connect() {
         String ip = ipField.getText().trim();
         int port = Integer.parseInt(portField.getText().trim());
@@ -231,14 +273,14 @@ public class ClientInviteUI extends JFrame {
             portField.setEnabled(false);
             pseudoField.setEnabled(false);
 
-            // Demande la liste des utilisateurs connectés au serveur
+            // Demande la liste des utilisateurs connectés au serveur (une seule fois)
             requestUsersList();
         } catch (Exception ex) {
             appendMessage("Erreur de connexion : " + ex.getMessage());
         }
     }
 
-    // Demande la liste des utilisateurs connectés au serveur
+    // Envoie la demande de liste des utilisateurs connectés
     private void requestUsersList() {
         if (client != null) {
             JSONObject request = new JSONObject();
@@ -247,7 +289,20 @@ public class ClientInviteUI extends JFrame {
         }
     }
 
-    // Gère les messages entrants (status, global, privé, users_list)
+    // Envoie le statut choisi au serveur
+    private void sendStatusToServer(String state) {
+        if (client != null) {
+            JSONObject statusMsg = new JSONObject();
+            statusMsg.put("type", "status");
+            statusMsg.put("state", state);
+            client.send(statusMsg.toString());
+            // Mets à jour ton propre statut localement
+            userStatusMap.put(pseudo, state);
+            updateUserListDisplay();
+        }
+    }
+
+    // Gère les messages entrants (status, global, privé, users)
     private void handleIncomingMessage(String msg) {
         try {
             JSONObject json = new JSONObject(msg);
@@ -264,14 +319,13 @@ public class ClientInviteUI extends JFrame {
             } else if ("status".equals(type)) {
                 String user = json.optString("user", "???");
                 String state = json.optString("state", "");
-                updateUserStatus(user, state);
-                // NE PAS afficher dans la zone de chat
+                userStatusMap.put(user, state);
+                updateUserListDisplay();
             } else if ("users".equals(type)) {
                 JSONArray users = json.optJSONArray("users");
                 if (users != null) {
                     updateUsersList(users);
                 }
-                // NE PAS afficher dans la zone de chat
             } else {
                 appendMessage("[Serveur] : " + msg);
             }
@@ -291,18 +345,22 @@ public class ClientInviteUI extends JFrame {
     // Met à jour la liste des utilisateurs connectés à partir d'un JSONArray
     private void updateUsersList(JSONArray users) {
         SwingUtilities.invokeLater(() -> {
-            // Mémorise l'utilisateur actuellement sélectionné
             String previouslySelected = userList.getSelectedValue();
 
-            userStatusMap.clear();
             userListModel.clear();
             for (int i = 0; i < users.length(); i++) {
                 String user = users.optString(i);
-                userStatusMap.put(user, "online");
-                userListModel.addElement(user);
+                if (!userStatusMap.containsKey(user)) {
+                    userStatusMap.put(user, "online");
+                }
+                // On n'affiche pas les utilisateurs "invisible" sauf moi-même
+                String state = userStatusMap.get(user);
+                if (!"invisible".equals(state) || user.equals(pseudo)) {
+                    userListModel.addElement(user);
+                }
             }
+            userStatusMap.keySet().removeIf(u -> !userListModel.contains(u));
 
-            // Rétablit la sélection si possible
             if (previouslySelected != null && userListModel.contains(previouslySelected)) {
                 userList.setSelectedValue(previouslySelected, true);
             } else {
@@ -311,15 +369,22 @@ public class ClientInviteUI extends JFrame {
         });
     }
 
-    // Met à jour la liste des utilisateurs connectés à partir d'un message "status"
-    private void updateUserStatus(String user, String state) {
+    // Met à jour l'affichage de la liste des utilisateurs avec leur statut
+    private void updateUserListDisplay() {
         SwingUtilities.invokeLater(() -> {
-            userStatusMap.put(user, state);
+            String previouslySelected = userList.getSelectedValue();
             userListModel.clear();
-            for (Map.Entry<String, String> entry : userStatusMap.entrySet()) {
-                if ("online".equals(entry.getValue())) {
-                    userListModel.addElement(entry.getKey());
+            for (String user : userStatusMap.keySet()) {
+                String state = userStatusMap.get(user);
+                // On n'affiche pas les utilisateurs "invisible" sauf moi-même
+                if (!"invisible".equals(state) || user.equals(pseudo)) {
+                    userListModel.addElement(user);
                 }
+            }
+            if (previouslySelected != null && userListModel.contains(previouslySelected)) {
+                userList.setSelectedValue(previouslySelected, true);
+            } else {
+                userList.clearSelection();
             }
         });
     }
@@ -358,6 +423,43 @@ public class ClientInviteUI extends JFrame {
             messagesArea.append(msg + "\n");
             messagesArea.setCaretPosition(messagesArea.getDocument().getLength());
         });
+    }
+
+    // Renderer personnalisé pour la JList des utilisateurs
+    private class UserListCellRenderer extends DefaultListCellRenderer {
+        @Override
+        public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
+                boolean cellHasFocus) {
+            JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            String user = value.toString();
+            String state = userStatusMap.getOrDefault(user, "online");
+            Color iconColor = ICON_ONLINE;
+            switch (state) {
+                case "away":
+                    iconColor = ICON_AWAY;
+                    break;
+                case "dnd":
+                    iconColor = ICON_DND;
+                    break;
+                case "invisible":
+                    iconColor = ICON_INVISIBLE;
+                    break;
+            }
+            label.setIcon(createStatusIcon(iconColor));
+            label.setText(user + " (" + state + ")");
+            return label;
+        }
+    }
+
+    // Crée une petite icône ronde colorée pour le statut
+    private Icon createStatusIcon(Color color) {
+        int size = 10;
+        BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = image.createGraphics();
+        g2.setColor(color);
+        g2.fillOval(0, 0, size, size);
+        g2.dispose();
+        return new ImageIcon(image);
     }
 
     public static void main(String[] args) {
