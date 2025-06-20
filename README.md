@@ -90,7 +90,7 @@
 - Plusieurs clients peuvent se connecter et échanger des messages en temps réel.
 - Les messages sont affichés avec le pseudo de l’expéditeur pour plus de clarté.
 
-## Jour 3 – Authentification et gestion des comptes utilisateurs
+# Jour 3 – Authentification et gestion des comptes utilisateurs
 
 ### Fonctionnalités implémentées
 
@@ -141,3 +141,25 @@
 2. Se connecter au serveur (IP/port).
 3. S’authentifier (inscription + connexion automatique, ou connexion directe, ou mode invité).
 4. Accéder à la fenêtre de chat.
+
+# Classcord - Jour 4
+
+## Fonctionnalités implémentées
+
+- Affichage dynamique de la liste des utilisateurs connectés dans l’interface Swing (panneau de droite).
+- Mise à jour automatique de la liste lors des connexions/déconnexions et à intervalle régulier.
+- Possibilité d’envoyer un message privé à un utilisateur sélectionné dans la liste.
+- Distinction visuelle claire entre messages globaux et messages privés dans la zone de chat.
+- Les messages privés ne sont visibles que par le destinataire concerné.
+
+## Utilisation
+
+1. Lancez l’application et connectez-vous.
+2. La liste des utilisateurs connectés s’affiche à droite.
+3. Sélectionnez un utilisateur pour lui envoyer un message privé, sinon envoyez un message global.
+4. Les messages privés sont affichés avec un préfixe `[MP de ...]` ou `[MP à ...]`.
+
+## Remarques techniques
+
+- La liste des utilisateurs est synchronisée avec le serveur à chaque connexion et toutes les 5 secondes.
+- La sélection d’un utilisateur pour les messages privés est conservée lors du rafraîchissement de la liste.

@@ -11,7 +11,7 @@ public class App {
         String pseudo = console.readLine();
 
         ClientInvite client = new ClientInvite();
-        client.connect("10.0.108.81", 12345); // adapte l’IP et le port
+        client.connect("10.0.108.52", 12345); // adapte l’IP et le port
         client.listen(null);
 
         while (true) {

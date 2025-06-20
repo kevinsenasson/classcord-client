@@ -50,4 +50,5 @@ public class User {
 		String response = client.getIn().readLine();
 		return response;
 	}
+
 }
